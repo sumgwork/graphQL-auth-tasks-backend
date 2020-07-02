@@ -7,7 +7,7 @@ module.exports.tasks = [
 
 module.exports.users = [
   { id: "1", name: "Kevin", email: "kevin@gmail.com" },
-  { id: "2", name: "john", email: "john@gmail.com" },
-  { id: "3", name: "peter", email: "peter@gmail.com" },
-  { id: "4", name: "bob", email: "bob@gmail.com" },
+  { id: "2", name: "John", email: "john@gmail.com" },
+  { id: "3", name: "Peter", email: "peter@gmail.com" },
+  { id: "4", name: "Bob", email: "bob@gmail.com" },
 ];
