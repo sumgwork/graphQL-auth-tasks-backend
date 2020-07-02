@@ -1,8 +1,9 @@
 const express = require("express");
-const { ApolloServer, gql } = require("apollo-server-express");
+const { ApolloServer } = require("apollo-server-express");
 const cors = require("cors");
 const dotEnv = require("dotenv");
 const resolvers = require("./resolvers");
+const typeDefs = require("./schema");
 
 // set env variables
 dotEnv.config();
@@ -15,43 +16,8 @@ app.use(cors());
 // body parser
 app.use(express.json());
 
-const typeDefs = gql`
-  type User {
-    id: ID!
-    name: String!
-    email: String!
-    tasks: [Task!]
-  }
-
-  type Task {
-    id: ID!
-    name: String!
-    completed: Boolean!
-    user: User!
-  }
-
-  input CreateTaskInput {
-    name: String!
-    userId: ID!
-  }
-
-  type Query {
-    greetings: String!
-    tasks: [Task!]
-    task(id: ID!): Task
-    users: [User!]
-    user(id: ID!): User
-  }
-
-  type Mutation {
-    createTask(input: CreateTaskInput!): Task
-  }
-`;
-
-// const resolvers = resolvers;
-
 const apolloServer = new ApolloServer({
-  typeDefs,
+  typeDefs, // schema
   resolvers,
 });
 
