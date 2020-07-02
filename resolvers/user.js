@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const { tasks, users } = require("../constants");
 const User = require("../database/models/user");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   Query: {
@@ -26,6 +27,38 @@ module.exports = {
 
         const result = await newUser.save();
         return result;
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    },
+    login: async (parent, args) => {
+      const { input } = args;
+      try {
+        // Check if user exists
+        const existingUser = await User.findOne({ email: input.email });
+        if (!existingUser) {
+          throw new Error("Invalid credentials!");
+        }
+        // match password
+        const match = await bcrypt.compare(
+          input.password,
+          existingUser.password
+        );
+        if (!match) {
+          throw new Error("Invalid credentials!");
+        }
+        const token = jwt.sign(
+          {
+            email: existingUser.email,
+            name: existingUser.name,
+          },
+          process.env.JWT_SECRET_KEY || "mysecretkey",
+          {
+            expiresIn: "1d",
+          }
+        );
+        return { token };
       } catch (error) {
         console.error(error);
         throw error;

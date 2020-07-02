@@ -10,6 +10,10 @@ module.exports = gql`
     updatedAt: Date!
   }
 
+  type Token {
+    token: String!
+  }
+
   extend type Query {
     users: [User!]
     user(id: ID!): User
@@ -21,7 +25,14 @@ module.exports = gql`
     password: String!
   }
 
+  input LoginInput {
+    email: String!
+    password: String!
+  }
+
   extend type Mutation {
     signup(input: SignupInput): User
+    login(input: LoginInput): Token
+    # Login is defined as a mutation here because mutations are executed sequentially
   }
 `;
