@@ -4,11 +4,15 @@ const cors = require("cors");
 const dotEnv = require("dotenv");
 const resolvers = require("./resolvers");
 const typeDefs = require("./schema");
+const { connection } = require("./database/util");
 
 // set env variables
 dotEnv.config();
 
 const app = express();
+
+// MongoDB
+connection();
 
 // cors
 app.use(cors());
