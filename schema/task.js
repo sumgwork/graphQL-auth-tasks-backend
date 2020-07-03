@@ -6,6 +6,18 @@ module.exports = gql`
     name: String!
     completed: Boolean!
     user: User!
+    createdAt: Date!
+    updatedAt: Date!
+  }
+
+  type PageInfo {
+    nextPageCursor: String
+    hasNextPage: Boolean
+  }
+
+  type TaskFeed {
+    taskFeed: [Task!]
+    pageInfo: PageInfo!
   }
 
   input CreateTaskInput {
@@ -24,7 +36,7 @@ module.exports = gql`
   }
 
   extend type Query {
-    tasks: [Task!]
+    tasks(cursor: String, limit: Int): TaskFeed
     task(id: ID!): Task
   }
 `;
