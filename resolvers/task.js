@@ -114,9 +114,10 @@ module.exports = {
     ),
   },
   Task: {
-    user: async (parent) => {
+    user: async (parent, args, context) => {
       try {
-        const user = await User.findById(parent.user);
+        // const user = await User.findById(parent.user);
+        const user = await context.loaders.user.load(parent.user.toString());
         if (!user) {
           throw new Error("User does not exist!");
         }
