@@ -10,7 +10,6 @@ module.exports = gql`
 
   input CreateTaskInput {
     name: String!
-    userId: ID!
   }
 
   extend type Mutation {
